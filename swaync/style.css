@@ -1,0 +1,173 @@
+* {
+  font-family: "SF Pro Display", "Lucida Grande", "Cantarell", "Noto Sans", sans-serif;
+  font-size: 14px;
+  color: #dfe3e8;
+}
+
+.control-center {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.012) 0px,
+      rgba(255,255,255,0.000) 1px,
+      rgba(0,0,0,0.040) 2px,
+      rgba(255,255,255,0.000) 3px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(44,47,53,0.992) 0%,
+      rgba(34,37,42,0.992) 22%,
+      rgba(27,30,35,0.994) 55%,
+      rgba(20,22,27,0.996) 100%
+    );
+  border: 1px solid rgba(255,255,255,0.05);
+  border-top: none;
+  border-right: none;
+  border-radius: 0;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.04),
+    -12px 0 30px rgba(0,0,0,0.34);
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.widget-title,
+.widget-dnd,
+.widget-buttons-grid,
+.widget-volume,
+.widget-notifications {
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.widget-title {
+  padding: 12px 18px 8px 18px;
+}
+
+.widget-title > label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f3f5f7;
+}
+
+.widget-title button {
+  background: rgba(255,255,255,0.05);
+  color: #f0f3f6;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 4px;
+  box-shadow: none;
+  min-width: 72px;
+  min-height: 34px;
+}
+
+.widget-dnd {
+  padding: 4px 18px 12px 18px;
+}
+
+.widget-dnd > label {
+  color: #d5d9de;
+}
+
+.widget-dnd switch {
+  min-width: 46px;
+  min-height: 26px;
+}
+
+.widget-dnd slider {
+  background: #f1f3f4;
+  border: none;
+  min-width: 22px;
+  min-height: 22px;
+}
+
+.widget-buttons-grid {
+  padding: 4px 18px 12px 18px;
+}
+
+.widget-buttons-grid flowbox {
+  min-width: 100%;
+}
+
+.widget-buttons-grid flowboxchild {
+  min-width: 25%;
+}
+
+.widget-buttons-grid flowboxchild button {
+  background: rgba(255,255,255,0.055);
+  color: #edf1f5;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+  min-height: 40px;
+  padding: 0;
+  margin: 0 4px;
+  font-size: 18px;
+}
+
+.widget-buttons-grid flowboxchild button:hover {
+  background: rgba(255,255,255,0.09);
+}
+
+.widget-volume {
+  padding: 0 18px 14px 18px;
+}
+
+.widget-volume label {
+  color: #edf1f5;
+  font-weight: 600;
+}
+
+.widget-volume trough {
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px;
+  min-height: 8px;
+}
+
+.widget-volume highlight {
+  background: rgba(232,236,240,0.92);
+  border-radius: 999px;
+}
+
+.widget-volume slider {
+  background: rgba(245,247,250,0.96);
+  border: none;
+  border-radius: 999px;
+  min-width: 16px;
+  min-height: 16px;
+}
+
+.notification-group {
+  background: transparent;
+}
+
+.notification-row {
+  background: transparent;
+  padding: 0;
+}
+
+.notification {
+  background: rgba(255,255,255,0.022);
+  color: #e4e7eb;
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.notification-content {
+  padding: 8px 10px;
+}
+
+.notification-default-action:hover,
+.notification-action:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.notification .summary {
+  color: #f1f4f7;
+  font-weight: 700;
+}
+
+.notification .body {
+  color: #c1c7ce;
+}

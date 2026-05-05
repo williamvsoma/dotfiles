@@ -1,0 +1,135 @@
+@define-color fg #111111;
+@define-color fg_dim #262626;
+@define-color fg_soft #4a4a4a;
+
+@define-color metal_1 rgba(252,252,252,0.985);
+@define-color metal_2 rgba(243,243,243,0.985);
+@define-color metal_3 rgba(230,230,230,0.985);
+@define-color metal_4 rgba(214,214,214,0.985);
+@define-color metal_5 rgba(196,196,196,0.985);
+@define-color metal_6 rgba(178,178,178,0.985);
+
+* {
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  font-family: "SF Pro Display", "Lucida Grande", "Cantarell", "Noto Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+window#waybar {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.024) 0px,
+      rgba(255,255,255,0.000) 1px,
+      rgba(0,0,0,0.010) 2px,
+      rgba(255,255,255,0.000) 3px
+    ),
+    linear-gradient(
+      to bottom,
+      @metal_1 0%,
+      @metal_2 18%,
+      @metal_3 38%,
+      @metal_4 60%,
+      @metal_5 82%,
+      @metal_6 100%
+    );
+  color: @fg;
+  border-top: 1px solid rgba(255,255,255,0.94);
+  border-bottom: 1px solid rgba(72,72,72,0.40);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.92),
+    inset 0 -1px 0 rgba(90,90,90,0.10);
+}
+
+#workspaces,
+#window,
+#cpu,
+#memory,
+#clock,
+#custom-notifications {
+  background: transparent;
+  color: @fg;
+  margin: 0;
+  padding: 0 10px;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.72);
+}
+
+#workspaces {
+  padding-left: 8px;
+}
+
+#workspaces button {
+  background: transparent;
+  box-shadow: none;
+  padding: 0 4px;
+  margin: 0;
+  min-width: 16px;
+  color: @fg;
+  font-size: 19px;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.82);
+}
+
+#workspaces button:hover {
+  background: transparent;
+  color: @fg;
+}
+
+#workspaces button.active {
+  font-size: 22px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+#workspaces button.urgent {
+  text-decoration: underline;
+}
+
+#window {
+  color: @fg_dim;
+  font-size: 15px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+window#waybar.empty #window {
+  color: transparent;
+}
+
+#cpu,
+#memory,
+#clock,
+#custom-notifications {
+  min-width: 0;
+  font-size: 15px;
+}
+
+#cpu {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#memory {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#clock {
+  font-weight: 700;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#custom-notifications {
+  font-size: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+tooltip {
+  background: rgba(28,28,28,0.96);
+  color: #f2f2f2;
+  border: 1px solid rgba(255,255,255,0.10);
+}

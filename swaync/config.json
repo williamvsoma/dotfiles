@@ -1,0 +1,75 @@
+{
+  "$schema": "/etc/xdg/swaync/configSchema.json",
+
+  "ignore-gtk-theme": true,
+  "cssPriority": "application",
+
+  "positionX": "right",
+  "positionY": "top",
+  "layer": "overlay",
+  "layer-shell": true,
+
+  "control-center-positionX": "right",
+  "control-center-positionY": "top",
+  "control-center-layer": "top",
+  "control-center-exclusive-zone": true,
+  "control-center-margin-top": 0,
+  "control-center-margin-right": 0,
+  "control-center-margin-bottom": 0,
+  "control-center-margin-left": 0,
+
+  "notification-2fa-action": true,
+  "timeout": 6,
+  "timeout-low": 3,
+  "timeout-critical": 0,
+  "fit-to-screen": true,
+
+  "widgets": [
+    "title",
+    "dnd",
+    "buttons-grid",
+    "volume",
+    "notifications"
+  ],
+
+  "widget-config": {
+    "title": {
+      "text": "Notification Center",
+      "clear-all-button": true,
+      "button-text": "Clear"
+    },
+
+    "dnd": {
+      "text": "Do Not Disturb"
+    },
+
+    "buttons-grid": {
+      "buttons-per-row": 4,
+      "actions": [
+        {
+          "label": "󰖩",
+          "command": "blueman-manager"
+        },
+        {
+          "label": "󰖪",
+          "command": "nm-connection-editor"
+        },
+        {
+          "label": "󰓃",
+          "command": "pavucontrol"
+        },
+        {
+          "label": "󰍬",
+          "command": "pavucontrol"
+        }
+      ]
+    },
+
+    "volume": {
+      "label": "󰕾",
+      "show-per-app": false,
+      "show-per-app-icon": false,
+      "show-per-app-label": false
+    }
+  }
+}
