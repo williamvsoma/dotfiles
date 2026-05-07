@@ -1,7 +1,7 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 25,
+  "height": 28,
   "margin-top": 0,
   "margin-left": 0,
   "margin-right": 0,
@@ -18,19 +18,14 @@
   "modules-right": [
     "cpu",
     "memory",
-    "clock",
+    "custom/clock",
     "custom/notifications"
   ],
 
   "hyprland/workspaces": {
     "disable-scroll": false,
     "all-outputs": false,
-    "format": "{icon}",
-    "format-icons": {
-      "active": "•",
-      "default": "•",
-      "urgent": "•"
-    }
+    "format": "{id}"
   },
 
   "hyprland/window": {
@@ -66,19 +61,20 @@
     "escape": true
   },
 
-  "clock": {
-    "interval": 1,
-    "format": "{:%a %-I:%M %p}",
-    "tooltip-format": "<big>{:%A, %B %-d, %Y}</big>\n<tt>{calendar}</tt>"
+  "custom/clock": {
+    "interval": 30,
+    "exec": "date '+%a %b %-d %H:%M'",
+    "on-click": "bash ~/.config/waybar/scripts/calendar-popup.sh"
   },
 
   "memory": {
-    "format": "󰍛 {used:0.1f}G",
+    "format": "󰍛  {used:0.1f}G",
     "tooltip-format": "{used:0.1f}G / {total:0.1f}G"
   },
 
   "cpu": {
-    "format": "󰻠 {usage}%",
-    "tooltip": false
+    "format": "󰻠  {usage}%",
+    "tooltip": false,
+    "on-click": "bash ~/.config/waybar/scripts/cpuinfo-popup.sh"
   }
 }

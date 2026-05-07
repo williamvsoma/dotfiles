@@ -1,0 +1,53 @@
+/* Tahoe glass style for zenity/gtk popups */
+window {
+    background-color: rgba(245, 245, 247, 0.85);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+headerbar {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    min-height: 0;
+    padding: 0;
+}
+
+.dialog-action-area {
+    background: transparent;
+    border: none;
+}
+
+label {
+    color: #000000;
+    font-family: "SF Pro Display", "Helvetica Neue", sans-serif;
+    font-size: 13px;
+}
+
+calendar {
+    background-color: transparent;
+    color: #000000;
+    font-family: "SF Pro Display", "Helvetica Neue", sans-serif;
+    font-size: 13px;
+    border: none;
+}
+
+calendar:selected {
+    background-color: rgba(0, 122, 255, 0.85);
+    color: #ffffff;
+    border-radius: 50%;
+}
+
+button {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+    color: #000000;
+    padding: 4px 12px;
+    font-family: "SF Pro Display", "Helvetica Neue", sans-serif;
+}
+
+button:hover {
+    background: rgba(255, 255, 255, 0.8);
+}

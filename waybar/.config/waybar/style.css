@@ -1,47 +1,17 @@
-@define-color fg #111111;
-@define-color fg_dim #262626;
-@define-color fg_soft #4a4a4a;
-
-@define-color metal_1 rgba(252,252,252,0.985);
-@define-color metal_2 rgba(243,243,243,0.985);
-@define-color metal_3 rgba(230,230,230,0.985);
-@define-color metal_4 rgba(214,214,214,0.985);
-@define-color metal_5 rgba(196,196,196,0.985);
-@define-color metal_6 rgba(178,178,178,0.985);
+@import "colors.css";
 
 * {
   border: none;
   border-radius: 0;
   min-height: 0;
-  font-family: "SF Pro Display", "Lucida Grande", "Cantarell", "Noto Sans", sans-serif;
+  font-family: "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Cantarell", sans-serif;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 window#waybar {
-  background:
-    repeating-linear-gradient(
-      90deg,
-      rgba(255,255,255,0.024) 0px,
-      rgba(255,255,255,0.000) 1px,
-      rgba(0,0,0,0.010) 2px,
-      rgba(255,255,255,0.000) 3px
-    ),
-    linear-gradient(
-      to bottom,
-      @metal_1 0%,
-      @metal_2 18%,
-      @metal_3 38%,
-      @metal_4 60%,
-      @metal_5 82%,
-      @metal_6 100%
-    );
+  background: transparent;
   color: @fg;
-  border-top: 1px solid rgba(255,255,255,0.94);
-  border-bottom: 1px solid rgba(72,72,72,0.40);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.92),
-    inset 0 -1px 0 rgba(90,90,90,0.10);
 }
 
 #workspaces,
@@ -53,45 +23,52 @@ window#waybar {
   background: transparent;
   color: @fg;
   margin: 0;
-  padding: 0 10px;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.72);
+  padding: 0 8px;
 }
 
 #workspaces {
-  padding-left: 8px;
+  padding-left: 6px;
 }
 
 #workspaces button {
-  background: transparent;
-  box-shadow: none;
-  padding: 0 4px;
-  margin: 0;
-  min-width: 16px;
+  background: rgba(255, 255, 255, 0.55);
+  padding: 0;
+  margin: 4px 3px;
+  min-width: 24px;
+  min-height: 24px;
+  border-radius: 50%;
   color: @fg;
-  font-size: 19px;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.82);
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 0.5px 1px rgba(0, 0, 0, 0.06);
 }
 
 #workspaces button:hover {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.7);
   color: @fg;
 }
 
 #workspaces button.active {
-  font-size: 22px;
-  padding-left: 3px;
-  padding-right: 3px;
+  background: rgba(255, 255, 255, 0.82);
+  color: @fg;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 0.5px 2px rgba(0, 0, 0, 0.08);
 }
 
 #workspaces button.urgent {
-  text-decoration: underline;
+  color: #ff3b30;
 }
 
 #window {
-  color: @fg_dim;
+  color: @fg;
   font-size: 15px;
-  padding-left: 12px;
-  padding-right: 12px;
+  font-weight: 600;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 window#waybar.empty #window {
@@ -101,35 +78,43 @@ window#waybar.empty #window {
 #cpu,
 #memory,
 #clock,
+#custom-clock,
 #custom-notifications {
   min-width: 0;
   font-size: 15px;
+  font-weight: 500;
 }
 
 #cpu {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: @fg;
 }
 
 #memory {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: @fg;
 }
 
-#clock {
-  font-weight: 700;
-  padding-left: 10px;
+#clock,
+#custom-clock {
+  font-weight: 600;
+  padding-left: 8px;
   padding-right: 10px;
+  color: @fg;
 }
 
 #custom-notifications {
-  font-size: 16px;
-  padding-left: 10px;
-  padding-right: 10px;
+  font-size: 14px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 tooltip {
-  background: rgba(28,28,28,0.96);
-  color: #f2f2f2;
-  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(30, 30, 30, 0.92);
+  color: #f5f5f7;
+  border-radius: 8px;
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 10px;
 }

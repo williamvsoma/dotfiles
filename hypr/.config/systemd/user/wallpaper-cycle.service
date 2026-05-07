@@ -1,0 +1,6 @@
+[Unit]
+Description=Cycle wallpaper based on time of day
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash %h/.config/hypr/wallpaper-cycle.sh

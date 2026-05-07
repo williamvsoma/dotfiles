@@ -1,0 +1,155 @@
+configuration {
+    modes: "combi,drun,calc";
+    combi-modes: "drun";
+    combi-display-format: "{text}";
+    show-icons: true;
+    drun-display-format: "{name}";
+    drun-match-fields: "name,generic,exec,categories,keywords";
+    matching: "fuzzy";
+    sorting-method: "fzf";
+    sort: true;
+    case-sensitive: false;
+    fixed-num-lines: false;
+    display-combi: "Spotlight";
+    display-drun: "Apps";
+    display-calc: "Calc";
+    font: "Noto Sans 15";
+
+    calc {
+        no-history: true;
+        no-persist-history: true;
+        calc-command: "printf '%s' '{result}' | wl-copy";
+        hint-result: "Result: ";
+        hint-welcome: "Type a calculation, then press Enter to copy the result";
+    }
+}
+
+* {
+    bg:                  rgba(28, 28, 30, 100%);
+    bg-soft:             rgba(44, 44, 46, 100%);
+    bg-selected:         rgba(72, 72, 74, 100%);
+    border-soft:         rgba(255, 255, 255, 22%);
+    fg:                  rgba(245, 245, 247, 100%);
+    fg-dim:              rgba(174, 174, 178, 100%);
+    accent:              rgba(10, 132, 255, 100%);
+    transparent:         rgba(0, 0, 0, 0%);
+
+    background-color:    @transparent;
+    text-color:          @fg;
+    border-color:        @border-soft;
+
+    normal-background:   @transparent;
+    normal-foreground:   @fg;
+    alternate-normal-background: @transparent;
+    alternate-normal-foreground: @fg;
+    selected-normal-background: @bg-selected;
+    selected-normal-foreground: @fg;
+
+    active-background:   @transparent;
+    active-foreground:   @accent;
+    selected-active-background: @bg-selected;
+    selected-active-foreground: @fg;
+
+    urgent-background:   @transparent;
+    urgent-foreground:   rgba(255, 69, 58, 100%);
+    selected-urgent-background: @bg-selected;
+    selected-urgent-foreground: @fg;
+}
+
+window {
+    location:            north;
+    anchor:              north;
+    y-offset:            170px;
+    width:               960px;
+    border:              1px;
+    border-radius:       10px;
+    padding:             0;
+    background-color:    @bg;
+}
+
+mainbox {
+    padding:             0;
+    spacing:             0;
+    background-color:    @transparent;
+    children:            [ inputbar, listview, message ];
+}
+
+inputbar {
+    padding:             16px 18px;
+    spacing:             0;
+    background-color:    @transparent;
+    border:              0 0 1px 0;
+    border-color:        rgba(255, 255, 255, 10%);
+    children:            [ entry ];
+}
+
+entry {
+    background-color:    @transparent;
+    text-color:          @fg;
+    placeholder:         "Search";
+    placeholder-color:   @fg-dim;
+    cursor:              text;
+    vertical-align:      0.5;
+}
+
+prompt,
+textbox-prompt-colon,
+case-indicator,
+num-filtered-rows,
+num-rows,
+textbox-num-sep {
+    enabled:             false;
+}
+
+listview {
+    background-color:    @transparent;
+    columns:             1;
+    lines:               7;
+    padding:             8px;
+    spacing:             2px;
+    scrollbar:           false;
+    fixed-height:        false;
+    dynamic:             true;
+}
+
+element {
+    background-color:    @transparent;
+    text-color:          @fg;
+    border:              0;
+    border-radius:       8px;
+    padding:             9px 12px;
+    spacing:             12px;
+    cursor:              pointer;
+}
+
+element selected.normal,
+element selected.active,
+element selected.urgent {
+    background-color:    @bg-selected;
+    text-color:          @fg;
+}
+
+element-icon {
+    background-color:    @transparent;
+    size:                24px;
+    vertical-align:      0.5;
+}
+
+element-text {
+    background-color:    @transparent;
+    text-color:          inherit;
+    vertical-align:      0.5;
+    highlight:           underline rgba(10, 132, 255, 100%);
+}
+
+message {
+    padding:             0 12px 10px;
+    background-color:    @transparent;
+}
+
+textbox {
+    padding:             7px 9px;
+    border-radius:       8px;
+    background-color:    @bg-soft;
+    text-color:          @fg-dim;
+}
