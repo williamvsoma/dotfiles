@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Cycle tahoe-beach wallpapers based on time of day
+set -euo pipefail
 
 WALLPAPER_DIR="$HOME/.config/hypr/wallpapers/26-tahoe-beach"
-HYPRPAPER_CONF="$HOME/.config/hypr/hyprpaper.conf"
-WAYBAR_COLORS="$HOME/.config/waybar/colors.css"
-HYPRLOCK_DIR="$HOME/.cache/hyprlock"
+WAYBAR_COLORS="$HOME/.local/state/waybar/tahoe-colors.css"
+HYPRLOCK_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/hyprlock"
 HYPRLOCK_WALLPAPER="$HYPRLOCK_DIR/wallpaper.png"
 LOCK_ONLY=false
 
@@ -31,6 +31,45 @@ prepare_lock_wallpaper() {
         mv "$tmp" "$target"
 }
 
+set_wallpaper() {
+    local wallpaper="$1"
+    local monitor failed=0
+    local -a monitors=()
+
+    systemctl --user start hyprpaper.service >/dev/null 2>&1 || true
+
+    if command -v hyprctl >/dev/null 2>&1; then
+        while IFS= read -r monitor; do
+            monitors+=("$monitor")
+        done < <(hyprctl monitors 2>/dev/null | awk '/^Monitor / { print $2 }')
+
+        if [ "${#monitors[@]}" -eq 0 ]; then
+            monitors=(HDMI-A-2)
+        fi
+
+        for monitor in "${monitors[@]}"; do
+            hyprctl hyprpaper wallpaper "$monitor,$wallpaper" >/dev/null 2>&1 || failed=1
+        done
+
+        return "$failed"
+    fi
+
+    return 1
+}
+
+write_waybar_colors() {
+    local fg="$1"
+    local tmp="$WAYBAR_COLORS.tmp"
+
+    mkdir -p "${WAYBAR_COLORS%/*}"
+    {
+        printf '@define-color fg %s;\n' "$fg"
+        printf '@define-color fg_dim %s;\n' "$fg"
+        printf '@define-color fg_soft %s;\n' "$fg"
+    } >"$tmp"
+    mv "$tmp" "$WAYBAR_COLORS"
+}
+
 if [ "${1:-}" = "--lock-only" ]; then
     LOCK_ONLY=true
 fi
@@ -55,7 +94,7 @@ mkdir -p "$HYPRLOCK_DIR"
 LOCK_WALLPAPER_CACHE="$(lock_cache_path "$WALLPAPER")"
 
 if [ "$LOCK_ONLY" = false ]; then
-    prepare_lock_wallpaper "$WALLPAPER" "$LOCK_WALLPAPER_CACHE"
+    prepare_lock_wallpaper "$WALLPAPER" "$LOCK_WALLPAPER_CACHE" || true
 fi
 
 if [ -s "$LOCK_WALLPAPER_CACHE" ]; then
@@ -68,29 +107,9 @@ if [ "$LOCK_ONLY" = true ]; then
     exit 0
 fi
 
-# Update hyprpaper.conf and restart hyprpaper through systemd so it survives
-# timer-triggered oneshot runs.
-cat > "$HYPRPAPER_CONF" << EOF
-wallpaper {
-  monitor = HDMI-A-2
-  path = $WALLPAPER
-  fit_mode = cover
-}
+set_wallpaper "$WALLPAPER" || true
+write_waybar_colors "$FG"
 
-wallpaper {
-  monitor =
-  path = $WALLPAPER
-  fit_mode = cover
-}
-EOF
-
-systemctl --user restart hyprpaper.service
-
-# Update waybar colors and reload the service.
-cat > "$WAYBAR_COLORS" << EOF
-@define-color fg $FG;
-@define-color fg_dim $FG;
-@define-color fg_soft $FG;
-EOF
-
-systemctl --user reload-or-restart waybar.service
+if systemctl --user is-active --quiet waybar.service; then
+    systemctl --user reload-or-restart waybar.service >/dev/null 2>&1 || true
+fi
