@@ -13,16 +13,19 @@
   "control-center-positionY": "top",
   "control-center-layer": "top",
   "control-center-exclusive-zone": true,
-  "control-center-margin-top": 0,
-  "control-center-margin-right": 0,
-  "control-center-margin-bottom": 0,
+  "control-center-margin-top": 42,
+  "control-center-margin-right": 8,
+  "control-center-margin-bottom": 8,
   "control-center-margin-left": 0,
+  "control-center-width": 420,
+  "control-center-height": 640,
 
   "notification-2fa-action": true,
+  "notification-window-width": 420,
   "timeout": 6,
   "timeout-low": 3,
   "timeout-critical": 0,
-  "fit-to-screen": true,
+  "fit-to-screen": false,
 
   "widgets": [
     "title",
@@ -33,6 +36,8 @@
   ],
 
   "widget-config": {
+    "notifications": {},
+
     "title": {
       "text": "Notification Center",
       "clear-all-button": true,
@@ -47,20 +52,20 @@
       "buttons-per-row": 4,
       "actions": [
         {
-          "label": "󰖩",
-          "command": "blueman-manager"
+          "label": "󰂯",
+          "command": "sh -lc 'exec blueman-manager'"
         },
         {
-          "label": "󰖪",
-          "command": "nm-connection-editor"
+          "label": "󰖩",
+          "command": "sh -lc 'exec nm-connection-editor'"
         },
         {
           "label": "󰓃",
-          "command": "pavucontrol"
+          "command": "sh -lc 'exec pavucontrol'"
         },
         {
           "label": "󰍬",
-          "command": "pavucontrol"
+          "command": "sh -lc 'exec pavucontrol'"
         }
       ]
     },

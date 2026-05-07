@@ -243,6 +243,24 @@ end
 local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
 
+local custom_languages = require 'custom.languages'
+
+local function extend_unique(list, extra)
+  local seen = {}
+  for _, item in ipairs(list) do
+    seen[item] = true
+  end
+  for _, item in ipairs(extra or {}) do
+    if not seen[item] then
+      table.insert(list, item)
+      seen[item] = true
+    end
+  end
+  return list
+end
+
+vim.filetype.add(custom_languages.filetypes or {})
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -319,6 +337,9 @@ require('lazy').setup({
         { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
+        { '<leader>a', group = '[A]I', mode = { 'n', 'v' } },
+        { '<leader>m', group = '[M]arkdown/LaTeX' },
+        { '<leader>r', group = '[R]EPL/Run', mode = { 'n', 'v' } },
         { 'gr', group = 'LSP Actions', mode = { 'n' } },
       },
     },
@@ -645,6 +666,7 @@ require('lazy').setup({
           },
         },
       }
+      servers = vim.tbl_deep_extend('force', servers, custom_languages.servers or {})
 
       -- Ensure the servers and tools above are installed
       --
@@ -657,6 +679,7 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'stylua',
       })
+      extend_unique(ensure_installed, custom_languages.tools)
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -685,12 +708,9 @@ require('lazy').setup({
       notify_on_error = false,
       format_on_save = function(bufnr)
         -- You can specify filetypes to autoformat on save here:
-        local enabled_filetypes = {
-          -- lua = true,
-          -- python = true,
-        }
+        local enabled_filetypes = custom_languages.format_on_save or {}
         if enabled_filetypes[vim.bo[bufnr].filetype] then
-          return { timeout_ms = 500 }
+          return { timeout_ms = 1500 }
         else
           return nil
         end
@@ -699,7 +719,7 @@ require('lazy').setup({
         lsp_format = 'fallback', -- Use external formatters if configured below, otherwise use LSP formatting. Set to `false` to disable LSP formatting entirely.
       },
       -- You can also specify external formatters in here.
-      formatters_by_ft = {
+      formatters_by_ft = vim.tbl_deep_extend('force', {
         lua = { 'stylua' },
         -- rust = { 'rustfmt' },
         -- Conform can also run multiple formatters sequentially
@@ -707,7 +727,7 @@ require('lazy').setup({
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
-      },
+      }, custom_languages.formatters_by_ft or {}),
     },
   },
 
@@ -731,12 +751,10 @@ require('lazy').setup({
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
+          },
         },
         opts = {},
       },
@@ -785,7 +803,7 @@ require('lazy').setup({
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets' },
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
       },
 
       snippets = { preset = 'luasnip' },
@@ -889,6 +907,7 @@ require('lazy').setup({
     config = function()
       -- ensure basic parser are installed
       local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+      extend_unique(parsers, custom_languages.parsers)
       require('nvim-treesitter').install(parsers)
 
       ---@param buf integer
@@ -957,7 +976,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
