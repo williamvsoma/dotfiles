@@ -1,80 +1,53 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 34,
+  "name": "notch",
+  "height": 54,
+  "width": 540,
   "margin-top": 0,
   "margin-left": 0,
   "margin-right": 0,
   "spacing": 0,
+  "mode": "hide",
+  "exclusive": false,
+  "fixed-center": true,
+  "start_hidden": true,
+  "reload_style_on_change": true,
+  "on-sigusr1": "hide",
+  "on-sigusr2": "show",
 
-  "modules-left": [
-    "hyprland/workspaces"
-  ],
+  "modules-left": [],
 
   "modules-center": [
-    "hyprland/window"
-  ],
-
-  "modules-right": [
-    "cpu",
-    "memory",
     "custom/clock",
+    "hyprland/workspaces",
     "custom/notifications"
   ],
+
+  "modules-right": [],
 
   "hyprland/workspaces": {
     "disable-scroll": false,
     "all-outputs": false,
+    "sort-by": "number",
     "format": "{id}"
-  },
-
-  "hyprland/window": {
-    "format": "{}",
-    "max-length": 96,
-    "separate-outputs": true,
-    "rewrite": {
-      "(.*) — Zen Browser": "$1",
-      "(.*) - Kitty": "$1",
-      "(.*) — Code": "$1",
-      "(.*) - Discord": "$1"
-    }
-  },
-
-  "custom/notifications": {
-    "tooltip": false,
-    "format": "􀋚",
-    "format-icons": {
-      "notification": "􀋚",
-      "none": "􀋚",
-      "dnd-notification": "􀙈",
-      "dnd-none": "􀙈",
-      "inhibited-notification": "􀙈",
-      "inhibited-none": "􀙈",
-      "dnd-inhibited-notification": "􀙈",
-      "dnd-inhibited-none": "􀙈"
-    },
-    "return-type": "json",
-    "exec-if": "which swaync-client",
-    "exec": "swaync-client -swb",
-    "on-click": "swaync-client -t -sw",
-    "on-click-right": "swaync-client -d -sw",
-    "escape": true
   },
 
   "custom/clock": {
     "interval": 30,
-    "exec": "date '+%a %b %-d %H:%M'",
+    "exec": "date '+%H:%M'",
+    "tooltip": false,
     "on-click": "bash ~/.config/waybar/scripts/calendar-popup.sh"
   },
 
-  "memory": {
-    "format": "󰍛  {used:0.1f}G",
-    "tooltip-format": "{used:0.1f}G / {total:0.1f}G"
-  },
-
-  "cpu": {
-    "format": "󰻠  {usage}%",
+  "custom/notifications": {
     "tooltip": false,
-    "on-click": "bash ~/.config/waybar/scripts/cpuinfo-popup.sh"
+    "format": "󰂚",
+    "return-type": "json",
+    "exec-if": "command -v swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
   }
 }

@@ -58,15 +58,49 @@ set_wallpaper() {
 }
 
 write_waybar_colors() {
-    local fg="$1"
+    local theme="$1"
     local tmp="$WAYBAR_COLORS.tmp"
 
     mkdir -p "${WAYBAR_COLORS%/*}"
-    {
-        printf '@define-color fg %s;\n' "$fg"
-        printf '@define-color fg_dim %s;\n' "$fg"
-        printf '@define-color fg_soft %s;\n' "$fg"
-    } >"$tmp"
+
+    if [ "$theme" = light ]; then
+        {
+            printf '@define-color fg #111114;\n'
+            printf '@define-color fg_dim rgba(17, 17, 20, 0.64);\n'
+            printf '@define-color fg_soft rgba(17, 17, 20, 0.38);\n'
+            printf '@define-color notch_bg rgba(248, 248, 250, 0.76);\n'
+            printf '@define-color notch_border rgba(255, 255, 255, 0.58);\n'
+            printf '@define-color notch_shadow rgba(0, 0, 0, 0.16);\n'
+            printf '@define-color notch_highlight rgba(255, 255, 255, 0.72);\n'
+            printf '@define-color item_hover rgba(255, 255, 255, 0.58);\n'
+            printf '@define-color active_bg #0a84ff;\n'
+            printf '@define-color active_fg #ffffff;\n'
+            printf '@define-color active_border rgba(255, 255, 255, 0.34);\n'
+            printf '@define-color active_shadow rgba(10, 132, 255, 0.30);\n'
+            printf '@define-color active_highlight rgba(255, 255, 255, 0.32);\n'
+            printf '@define-color urgent_bg rgba(255, 59, 48, 0.16);\n'
+            printf '@define-color urgent_fg #ff3b30;\n'
+        } >"$tmp"
+    else
+        {
+            printf '@define-color fg #f5f5f7;\n'
+            printf '@define-color fg_dim rgba(245, 245, 247, 0.68);\n'
+            printf '@define-color fg_soft rgba(245, 245, 247, 0.42);\n'
+            printf '@define-color notch_bg rgba(28, 28, 30, 0.78);\n'
+            printf '@define-color notch_border rgba(255, 255, 255, 0.14);\n'
+            printf '@define-color notch_shadow rgba(0, 0, 0, 0.34);\n'
+            printf '@define-color notch_highlight rgba(255, 255, 255, 0.08);\n'
+            printf '@define-color item_hover rgba(255, 255, 255, 0.12);\n'
+            printf '@define-color active_bg #0a84ff;\n'
+            printf '@define-color active_fg #ffffff;\n'
+            printf '@define-color active_border rgba(255, 255, 255, 0.22);\n'
+            printf '@define-color active_shadow rgba(10, 132, 255, 0.36);\n'
+            printf '@define-color active_highlight rgba(255, 255, 255, 0.26);\n'
+            printf '@define-color urgent_bg rgba(255, 69, 58, 0.20);\n'
+            printf '@define-color urgent_fg #ff453a;\n'
+        } >"$tmp"
+    fi
+
     mv "$tmp" "$WAYBAR_COLORS"
 }
 
@@ -78,16 +112,16 @@ HOUR=$(date +%H)
 
 if [ "$HOUR" -ge 5 ] && [ "$HOUR" -lt 8 ]; then
     WALLPAPER="$WALLPAPER_DIR/26-Tahoe-Beach-Dawn.png"
-    FG="#000000"
+    WAYBAR_THEME=light
 elif [ "$HOUR" -ge 8 ] && [ "$HOUR" -lt 18 ]; then
     WALLPAPER="$WALLPAPER_DIR/26-Tahoe-Beach-Day.png"
-    FG="#000000"
+    WAYBAR_THEME=light
 elif [ "$HOUR" -ge 18 ] && [ "$HOUR" -lt 21 ]; then
     WALLPAPER="$WALLPAPER_DIR/26-Tahoe-Beach-Dusk.png"
-    FG="#ffffff"
+    WAYBAR_THEME=dark
 else
     WALLPAPER="$WALLPAPER_DIR/26-Tahoe-Beach-Night.png"
-    FG="#ffffff"
+    WAYBAR_THEME=dark
 fi
 
 mkdir -p "$HYPRLOCK_DIR"
@@ -108,8 +142,8 @@ if [ "$LOCK_ONLY" = true ]; then
 fi
 
 set_wallpaper "$WALLPAPER" || true
-write_waybar_colors "$FG"
+write_waybar_colors "$WAYBAR_THEME"
 
 if systemctl --user is-active --quiet waybar.service; then
-    systemctl --user reload-or-restart waybar.service >/dev/null 2>&1 || true
+    systemctl --user restart waybar.service >/dev/null 2>&1 || true
 fi

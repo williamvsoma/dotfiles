@@ -1,8 +1,44 @@
 #!/usr/bin/env python3
-import gi, signal
+import json
+import signal
+import subprocess
+
+import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Gtk4LayerShell', '1.0')
 from gi.repository import Gtk, Gtk4LayerShell, Gdk
+
+CALENDAR_WIDTH = 300
+CALENDAR_HEIGHT = 300
+NOTCH_OFFSET = 62
+
+
+def focused_monitor_width():
+    try:
+        result = subprocess.run(
+            ["hyprctl", "-j", "monitors"],
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
+            text=True,
+            timeout=0.3,
+        )
+        monitors = json.loads(result.stdout)
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, json.JSONDecodeError):
+        return None
+
+    if not isinstance(monitors, list):
+        return None
+
+    for monitor in monitors:
+        if monitor.get("focused"):
+            return monitor.get("width")
+
+    if monitors:
+        return monitors[0].get("width")
+
+    return None
+
 
 class CalendarPopup(Gtk.Application):
     def __init__(self):
@@ -10,14 +46,17 @@ class CalendarPopup(Gtk.Application):
 
     def do_activate(self):
         win = Gtk.ApplicationWindow(application=self)
-        win.set_default_size(280, 280)
+        win.set_default_size(CALENDAR_WIDTH, CALENDAR_HEIGHT)
 
         Gtk4LayerShell.init_for_window(win)
         Gtk4LayerShell.set_layer(win, Gtk4LayerShell.Layer.OVERLAY)
         Gtk4LayerShell.set_anchor(win, Gtk4LayerShell.Edge.TOP, True)
-        Gtk4LayerShell.set_anchor(win, Gtk4LayerShell.Edge.RIGHT, True)
-        Gtk4LayerShell.set_margin(win, Gtk4LayerShell.Edge.TOP, 0)
-        Gtk4LayerShell.set_margin(win, Gtk4LayerShell.Edge.RIGHT, 60)
+        Gtk4LayerShell.set_anchor(win, Gtk4LayerShell.Edge.LEFT, True)
+        Gtk4LayerShell.set_margin(win, Gtk4LayerShell.Edge.TOP, NOTCH_OFFSET)
+        monitor_width = focused_monitor_width()
+        if monitor_width:
+            left_margin = max((int(monitor_width) - CALENDAR_WIDTH) // 2, 0)
+            Gtk4LayerShell.set_margin(win, Gtk4LayerShell.Edge.LEFT, left_margin)
         Gtk4LayerShell.set_keyboard_mode(win, Gtk4LayerShell.KeyboardMode.ON_DEMAND)
 
         css = Gtk.CssProvider()

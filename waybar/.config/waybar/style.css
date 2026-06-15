@@ -4,9 +4,9 @@
   border: none;
   border-radius: 0;
   min-height: 0;
-  font-family: "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Cantarell", sans-serif;
-  font-size: 15px;
-  font-weight: 500;
+  font-family: "SF Pro Display", "SF Pro Text", "Symbols Nerd Font", "Helvetica Neue", "Cantarell", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 window#waybar {
@@ -14,107 +14,120 @@ window#waybar {
   color: @fg;
 }
 
+window#waybar > box {
+  background: transparent;
+  min-height: 54px;
+}
+
+.modules-left,
+.modules-right {
+  min-width: 0;
+}
+
+.modules-center {
+  background: @notch_bg;
+  border: 1px solid @notch_border;
+  border-top: 0;
+  border-radius: 0 0 12px 12px;
+  box-shadow:
+    0 14px 32px @notch_shadow,
+    inset 0 1px 0 @notch_highlight;
+  margin: 0;
+  padding: 7px 10px 9px;
+}
+
+#custom-clock,
 #workspaces,
-#window,
-#cpu,
-#memory,
-#clock,
 #custom-notifications {
   background: transparent;
   color: @fg;
   margin: 0;
-  padding: 0 8px;
+  min-height: 30px;
+}
+
+#custom-clock {
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 800;
+  min-width: 58px;
+  padding: 0 4px;
+}
+
+#custom-clock:hover,
+#custom-notifications:hover {
+  background: @item_hover;
 }
 
 #workspaces {
-  padding-left: 6px;
+  padding: 0 4px;
 }
 
 #workspaces button {
-  background: rgba(255, 255, 255, 0.55);
-  padding: 0;
-  margin: 4px 3px;
-  min-width: 24px;
-  min-height: 24px;
-  border-radius: 50%;
-  color: @fg;
-  font-size: 12px;
-  font-weight: 500;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow:
-    0 0.5px 1px rgba(0, 0, 0, 0.06);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: @fg_dim;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0 2px;
+  min-height: 30px;
+  min-width: 26px;
+  padding: 0 2px;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    min-width 150ms ease;
 }
 
 #workspaces button:hover {
-  background: rgba(255, 255, 255, 0.7);
+  background: @item_hover;
   color: @fg;
+}
+
+#workspaces button.empty {
+  color: @fg_soft;
 }
 
 #workspaces button.active {
-  background: rgba(255, 255, 255, 0.82);
-  color: @fg;
-  font-weight: 700;
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: @active_bg;
+  border-color: @active_border;
   box-shadow:
-    0 0.5px 2px rgba(0, 0, 0, 0.08);
+    0 4px 14px @active_shadow,
+    inset 0 1px 0 @active_highlight;
+  color: @active_fg;
+  font-weight: 800;
+  min-width: 48px;
 }
 
 #workspaces button.urgent {
-  color: #ff3b30;
-}
-
-#window {
-  color: @fg;
-  font-size: 15px;
-  font-weight: 600;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-window#waybar.empty #window {
-  color: transparent;
-}
-
-#cpu,
-#memory,
-#clock,
-#custom-clock,
-#custom-notifications {
-  min-width: 0;
-  font-size: 15px;
-  font-weight: 500;
-}
-
-#cpu {
-  padding-left: 8px;
-  padding-right: 8px;
-  color: @fg;
-}
-
-#memory {
-  padding-left: 8px;
-  padding-right: 8px;
-  color: @fg;
-}
-
-#clock,
-#custom-clock {
-  font-weight: 600;
-  padding-left: 8px;
-  padding-right: 10px;
-  color: @fg;
+  background: @urgent_bg;
+  color: @urgent_fg;
 }
 
 #custom-notifications {
-  font-size: 14px;
-  padding-left: 8px;
-  padding-right: 8px;
+  border-radius: 999px;
+  font-size: 17px;
+  min-width: 58px;
+  padding: 0 4px;
+}
+
+#custom-notifications.notification,
+#custom-notifications.inhibited-notification {
+  color: @active_bg;
+}
+
+#custom-notifications.dnd-none,
+#custom-notifications.dnd-notification,
+#custom-notifications.dnd-inhibited-none,
+#custom-notifications.dnd-inhibited-notification {
+  color: @fg_soft;
 }
 
 tooltip {
-  background: rgba(30, 30, 30, 0.92);
-  color: #f5f5f7;
+  background: rgba(28, 28, 30, 0.92);
+  border: 0.5px solid rgba(255, 255, 255, 0.10);
   border-radius: 8px;
-  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  color: #f5f5f7;
   padding: 6px 10px;
 }
