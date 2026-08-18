@@ -84,6 +84,10 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+if vim.loader then
+  vim.loader.enable()
+end
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -905,10 +909,13 @@ require('lazy').setup({
     branch = 'main',
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
     config = function()
-      -- ensure basic parser are installed
+      -- Keep the configured parser set available without downloading/compiling
+      -- every missing parser during ordinary startup.
       local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
       extend_unique(parsers, custom_languages.parsers)
-      require('nvim-treesitter').install(parsers)
+      vim.api.nvim_create_user_command('TSInstallConfigured', function()
+        require('nvim-treesitter').install(parsers)
+      end, { desc = 'Install configured Treesitter parsers' })
 
       ---@param buf integer
       ---@param language string

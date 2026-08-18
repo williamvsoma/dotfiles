@@ -4,8 +4,10 @@ set -euo pipefail
 
 WALLPAPER_DIR="$HOME/.config/hypr/wallpapers/26-tahoe-beach"
 WAYBAR_COLORS="$HOME/.local/state/waybar/tahoe-colors.css"
+WAYBAR_STYLE="$HOME/.config/waybar/style.css"
 HYPRLOCK_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/hyprlock"
 HYPRLOCK_WALLPAPER="$HYPRLOCK_DIR/wallpaper.png"
+FALLBACK_MONITOR="desc:HP Inc. HP P34hc G4 CNC049181P"
 LOCK_ONLY=false
 
 lock_cache_path() {
@@ -44,7 +46,7 @@ set_wallpaper() {
         done < <(hyprctl monitors 2>/dev/null | awk '/^Monitor / { print $2 }')
 
         if [ "${#monitors[@]}" -eq 0 ]; then
-            monitors=(HDMI-A-2)
+            monitors=("$FALLBACK_MONITOR")
         fi
 
         for monitor in "${monitors[@]}"; do
@@ -144,6 +146,4 @@ fi
 set_wallpaper "$WALLPAPER" || true
 write_waybar_colors "$WAYBAR_THEME"
 
-if systemctl --user is-active --quiet waybar.service; then
-    systemctl --user restart waybar.service >/dev/null 2>&1 || true
-fi
+touch "$WAYBAR_STYLE" 2>/dev/null || true

@@ -119,6 +119,7 @@ blankwindow,
   margin-left: 8px;
   min-height: 26px;
   min-width: 48px;
+  padding: 0;
 }
 
 .widget-dnd switch:checked {
@@ -128,8 +129,10 @@ blankwindow,
 .widget-dnd switch slider {
   background: rgb(245, 245, 247);
   border-radius: 999px;
+  margin: 0;
   min-height: 22px;
   min-width: 22px;
+  padding: 0;
 }
 
 .widget-buttons-grid {
@@ -174,10 +177,18 @@ blankwindow,
   font-weight: 600;
 }
 
+.widget-volume scale {
+  margin: 0;
+  min-height: 24px;
+  min-width: 140px;
+  padding: 0;
+}
+
 .widget-volume trough {
   background: rgba(118, 118, 128, 0.30);
   border-radius: 999px;
   min-height: 7px;
+  min-width: 140px;
 }
 
 .widget-volume highlight {
@@ -188,8 +199,22 @@ blankwindow,
 .widget-volume slider {
   background: rgb(245, 245, 247);
   border-radius: 999px;
+  margin: 0;
   min-height: 16px;
   min-width: 16px;
+  padding: 0;
+}
+
+.widget-volume scale.horizontal trough slider,
+.widget-volume scale.vertical trough slider,
+.widget-slider scale.horizontal trough slider,
+.widget-slider scale.vertical trough slider {
+  background: rgb(245, 245, 247);
+  border-radius: 999px;
+  margin: 0;
+  min-height: 16px;
+  min-width: 16px;
+  padding: 0;
 }
 
 .notification-row,

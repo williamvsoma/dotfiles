@@ -19,7 +19,7 @@
   "modules-left": [],
 
   "modules-center": [
-    "custom/clock",
+    "clock",
     "hyprland/workspaces",
     "custom/notifications"
   ],
@@ -33,9 +33,9 @@
     "format": "{id}"
   },
 
-  "custom/clock": {
-    "interval": 30,
-    "exec": "date '+%H:%M'",
+  "clock": {
+    "interval": 60,
+    "format": "{:%H:%M}",
     "tooltip": false,
     "on-click": "bash ~/.config/waybar/scripts/calendar-popup.sh"
   },

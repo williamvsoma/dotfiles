@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source_file="$HOME/.config/waybar/scripts/notch-autohide.rs"
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/waybar"
+binary="$cache_dir/notch-autohide"
+tmp_binary="$binary.tmp.$$"
+
+if [ ! -x "$binary" ] || [ "$source_file" -nt "$binary" ]; then
+    if command -v rustc >/dev/null 2>&1; then
+        rustc_bin="$(command -v rustc)"
+    elif [ -x "$HOME/.cargo/bin/rustc" ]; then
+        rustc_bin="$HOME/.cargo/bin/rustc"
+    else
+        printf 'rustc is required to build %s\n' "$source_file" >&2
+        exit 127
+    fi
+
+    mkdir -p "$cache_dir"
+    "$rustc_bin" \
+        --edition=2021 \
+        -C opt-level=3 \
+        -C codegen-units=1 \
+        -C lto=fat \
+        -C panic=abort \
+        -C strip=symbols \
+        "$source_file" \
+        -o "$tmp_binary"
+    mv "$tmp_binary" "$binary"
+fi
+
+exec "$binary"

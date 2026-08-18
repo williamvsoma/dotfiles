@@ -36,7 +36,7 @@ window#waybar > box {
   padding: 7px 10px 9px;
 }
 
-#custom-clock,
+#clock,
 #workspaces,
 #custom-notifications {
   background: transparent;
@@ -45,7 +45,7 @@ window#waybar > box {
   min-height: 30px;
 }
 
-#custom-clock {
+#clock {
   border-radius: 999px;
   font-size: 15px;
   font-weight: 800;
@@ -53,7 +53,7 @@ window#waybar > box {
   padding: 0 4px;
 }
 
-#custom-clock:hover,
+#clock:hover,
 #custom-notifications:hover {
   background: @item_hover;
 }
